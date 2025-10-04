@@ -6,7 +6,6 @@ namespace WebApplication3.Controllers;
 [Route("api/estekhdam")]
 public class TestControllers : ControllerBase
 {
-    private object _context;
     public static List<People> People = new List<People>();
     [HttpGet]
     public async Task<ActionResult<IEnumerable<People>>> GetAll()
@@ -24,7 +23,10 @@ public class TestControllers : ControllerBase
     [HttpPut]
     public async Task<ActionResult<People>> Put(People people)
     {
-        People.Add(people);
+        var Up = People.FirstOrDefault();
+        Up.Id = people.Id;
+        Up.FirstName = people.FirstName;
+        Up.LastName = people.LastName;
         return await Task.FromResult(Ok(People));
     }
 
