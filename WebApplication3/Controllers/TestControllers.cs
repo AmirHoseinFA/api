@@ -23,18 +23,24 @@ public class TestControllers : ControllerBase
     [HttpPut]
     public async Task<ActionResult<People>> Put(People people)
     {
-        var Up = People.FirstOrDefault();
-        Up.Id = people.Id;
-        Up.FirstName = people.FirstName;
-        Up.LastName = people.LastName;
+        var up = People.Where(id=>id.Id==people.Id).ToList();
+        foreach (var item in up)
+        {
+            item.Id=people.Id;
+            item.FirstName=people.FirstName;
+            item.LastName=people.LastName;
+        }
         return await Task.FromResult(Ok(People));
     }
 
     [HttpDelete]
     public async Task<ActionResult<People>> Delete(People people)
     {
-        People.Remove(people);
+        var del= People.Where(id => id.Id == people.Id).ToList();
+        foreach (var p in del)
+        {
+            People.Remove(p);
+        }
         return await Task.FromResult(Ok(People));
-        
     }
 }
