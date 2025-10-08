@@ -23,7 +23,8 @@ public class TestControllers : ControllerBase
     [HttpPut]
     public async Task<ActionResult<People>> Put(People people)
     {
-        var up = People.Where(id=>id.Id==people.Id).ToList();
+        
+        var up = People.Where(id=>id.Id==people.Id);
         foreach (var item in up)
         {
             item.Id=people.Id;
@@ -36,11 +37,13 @@ public class TestControllers : ControllerBase
     [HttpDelete]
     public async Task<ActionResult<People>> Delete(People people)
     {
-        var del= People.Where(id => id.Id == people.Id).ToList();
-        foreach (var p in del)
-        {
-            People.Remove(p);
-        }
-        return await Task.FromResult(Ok(People));
+        People.FindAll(id=>id.Id==people.Id);
+        People.RemoveAll(id=>id.Id==people.Id);
+        // var del= People.Where(id => id.Id == people.Id).ToList();
+        //  foreach (var p in del)
+        //  {
+        //      People.Remove(p);
+        //  }
+         return await Task.FromResult(Ok(People));
     }
 }
