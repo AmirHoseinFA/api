@@ -23,14 +23,10 @@ public class TestControllers : ControllerBase
     [HttpPut]
     public async Task<ActionResult<People>> Put(People people)
     {
-        
-        var up = People.Where(id=>id.Id==people.Id);
-        foreach (var item in up)
-        {
-            item.Id=people.Id;
-            item.FirstName=people.FirstName;
-            item.LastName=people.LastName;
-        }
+        var up = People.SingleOrDefault(id=>id.Id==people.Id);
+            up.Id=people.Id;
+            up.FirstName=people.FirstName;
+            up.LastName=people.LastName;
         return await Task.FromResult(Ok(People));
     }
 
