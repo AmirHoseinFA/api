@@ -15,7 +15,7 @@ public class TestControllers : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<People>> Post([FromRoute] int id, [FromBody] PeopleRequest people)
+    public async Task<ActionResult<People>> Post([FromBody] PeopleRequest people)
     {
 
         Persons.Add(new People()
@@ -23,33 +23,34 @@ public class TestControllers : ControllerBase
 
             FirstName = people.FirstName,
             LastName = people.LastName,
-            Id = id
+            Id = 1
         });
-        return await Task.FromResult(Ok(Persons));
+        return await Task.FromResult(Ok());
     }
 
 
     [HttpPut("{id}")]
       public async Task<ActionResult<People>> Put([FromRoute] int id, [FromBody] PeopleRequest people)
       {
-          var up = persons.SingleOrDefault(p => p.Id == id);
+          var up = Persons.SingleOrDefault(p => p.Id == id);
     
-          up.Id = people.id;//TODO:do by amir
           up.FirstName = people.FirstName;
           up.LastName = people.LastName;
-          return await Task.FromResult(Ok(persons));
+          return await Task.FromResult(Ok(up));
       }
-          [HttpDelete]
-      public async Task<ActionResult<People>> Delete(PeopleRequest people)
+          [HttpDelete("{id}")]
+      public async Task<ActionResult<People>> Delete([FromRoute] int id)
      {
-         persons.FindAll(id => id.Id == people.Id);//TODO:do by amir
-         persons.RemoveAll(id => id.Id == people.Id);//TODO:do by amir
+        var speceficPerson= Persons.SingleOrDefault(p => p.Id ==id);
+        
+        Persons.Remove(speceficPerson);
+        
          // var del= People.Where(id => id.Id == people.Id).ToList();
          //  foreach (var p in del)
          //  {
          //      People.Remove(p);
          //  }
-         return await Task.FromResult(Ok(persons));
+         return await Task.FromResult(Ok(Persons));
      }
 // }
 }
