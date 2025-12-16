@@ -14,7 +14,7 @@ public class TestControllers(IPeople People) : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<People>> Post([FromRoute] int id,[FromBody] People people)
+    public async Task<ActionResult<People>> Post([FromBody] People people)
     {
         return await Task.FromResult(Ok(People.Add(people)));
     }

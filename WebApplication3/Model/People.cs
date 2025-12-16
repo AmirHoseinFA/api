@@ -10,7 +10,13 @@ public interface IPeople
 }
 public class People
 {
-    public int Id { get; set; }
+    public People()
+    {
+
+        for (Id =1;Id<=PeopleRequest.Persons.Count;Id++) ;
+    }
+
+    public int Id { get; }
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
 }
@@ -38,7 +44,8 @@ public class PeopleRequest : IPeople
             FirstName = person.FirstName,
             LastName = person.LastName,
         });
-        return Persons;    }
+        return Persons;    
+    }
 
     public void Update(int id, People person)
     {
@@ -46,7 +53,7 @@ public class PeopleRequest : IPeople
         
         up.FirstName = person.FirstName;
         up.LastName = person.LastName;
-        return ; ;
+        return ; 
     }
 
     public void Delete(int id)
